@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		477623642AD42518003FBA97 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477623632AD42518003FBA97 /* SecondViewController.swift */; };
 		477C76B52A97470E006DA104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76B42A97470E006DA104 /* AppDelegate.swift */; };
 		477C76B72A97470E006DA104 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76B62A97470E006DA104 /* SceneDelegate.swift */; };
 		477C76B92A97470E006DA104 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76B82A97470E006DA104 /* ViewController.swift */; };
@@ -14,12 +15,14 @@
 		477C76BE2A97470F006DA104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 477C76BD2A97470F006DA104 /* Assets.xcassets */; };
 		477C76C12A97470F006DA104 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 477C76BF2A97470F006DA104 /* LaunchScreen.storyboard */; };
 		477C76CB2A97AF0E006DA104 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76CA2A97AF0E006DA104 /* HeaderView.swift */; };
-		477C76CD2A97B6C8006DA104 /* DropByPod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76CC2A97B6C8006DA104 /* DropByPod.swift */; };
+		47C9B5192AA720FE009A98C8 /* Delegate+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9B5182AA720FE009A98C8 /* Delegate+DataSource.swift */; };
+		47C9B51B2AA72129009A98C8 /* TabelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9B51A2AA72129009A98C8 /* TabelViewCell.swift */; };
 		D6DC7F81B578D85E31B26F24 /* Pods_DropDownMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E6FD3C2BEDA396C849A314 /* Pods_DropDownMenu.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		312D7D89A0CD9CFEF8D18BF9 /* Pods-DropDownMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropDownMenu.release.xcconfig"; path = "Target Support Files/Pods-DropDownMenu/Pods-DropDownMenu.release.xcconfig"; sourceTree = "<group>"; };
+		477623632AD42518003FBA97 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		477C76B12A97470E006DA104 /* DropDownMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropDownMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		477C76B42A97470E006DA104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		477C76B62A97470E006DA104 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,7 +32,8 @@
 		477C76C02A97470F006DA104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		477C76C22A97470F006DA104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		477C76CA2A97AF0E006DA104 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
-		477C76CC2A97B6C8006DA104 /* DropByPod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropByPod.swift; sourceTree = "<group>"; };
+		47C9B5182AA720FE009A98C8 /* Delegate+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Delegate+DataSource.swift"; sourceTree = "<group>"; };
+		47C9B51A2AA72129009A98C8 /* TabelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabelViewCell.swift; sourceTree = "<group>"; };
 		7DEA886027CA8D5FC7FFF3C7 /* Pods-DropDownMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropDownMenu.debug.xcconfig"; path = "Target Support Files/Pods-DropDownMenu/Pods-DropDownMenu.debug.xcconfig"; sourceTree = "<group>"; };
 		D9E6FD3C2BEDA396C849A314 /* Pods_DropDownMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropDownMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -67,17 +71,27 @@
 		477C76B32A97470E006DA104 /* DropDownMenu */ = {
 			isa = PBXGroup;
 			children = (
+				47C9B5172AA720C5009A98C8 /* TabelView */,
 				477C76B42A97470E006DA104 /* AppDelegate.swift */,
 				477C76B62A97470E006DA104 /* SceneDelegate.swift */,
 				477C76B82A97470E006DA104 /* ViewController.swift */,
+				477623632AD42518003FBA97 /* SecondViewController.swift */,
 				477C76CA2A97AF0E006DA104 /* HeaderView.swift */,
 				477C76BA2A97470E006DA104 /* Main.storyboard */,
 				477C76BD2A97470F006DA104 /* Assets.xcassets */,
 				477C76BF2A97470F006DA104 /* LaunchScreen.storyboard */,
 				477C76C22A97470F006DA104 /* Info.plist */,
-				477C76CC2A97B6C8006DA104 /* DropByPod.swift */,
 			);
 			path = DropDownMenu;
+			sourceTree = "<group>";
+		};
+		47C9B5172AA720C5009A98C8 /* TabelView */ = {
+			isa = PBXGroup;
+			children = (
+				47C9B5182AA720FE009A98C8 /* Delegate+DataSource.swift */,
+				47C9B51A2AA72129009A98C8 /* TabelViewCell.swift */,
+			);
+			path = TabelView;
 			sourceTree = "<group>";
 		};
 		4BA9B745698F11716D91B926 /* Pods */ = {
@@ -212,11 +226,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47C9B5192AA720FE009A98C8 /* Delegate+DataSource.swift in Sources */,
 				477C76CB2A97AF0E006DA104 /* HeaderView.swift in Sources */,
 				477C76B92A97470E006DA104 /* ViewController.swift in Sources */,
+				47C9B51B2AA72129009A98C8 /* TabelViewCell.swift in Sources */,
+				477623642AD42518003FBA97 /* SecondViewController.swift in Sources */,
 				477C76B52A97470E006DA104 /* AppDelegate.swift in Sources */,
 				477C76B72A97470E006DA104 /* SceneDelegate.swift in Sources */,
-				477C76CD2A97B6C8006DA104 /* DropByPod.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

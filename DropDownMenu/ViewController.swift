@@ -8,9 +8,87 @@
 import UIKit
 import SnapKit
 
-class DropDownViewController: UIViewController {
+protocol CustomCellDelegate: AnyObject {
     
-    var dropTableView = UITableView()
+    func pushViewController()
+}
+
+class DropDownViewController: UIViewController, CustomCellDelegate {
+
+    lazy var globalView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        view.layer.borderColor = UIColor(red: 0.329,
+                                         green: 0.557,
+                                         blue: 1,
+                                         alpha: 1).cgColor
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    lazy var adressLabel: UILabel = {
+        let label = UILabel()
+        label.isUserInteractionEnabled = true
+        label.text = "Адрес доставки"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = UIColor(red: 0.677,
+                                  green: 0.732,
+                                  blue: 0.804,
+                                  alpha: 1)
+        return label
+    }()
+    
+    lazy var arrowImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "down")
+        return imageView
+    }()
+    
+    lazy var smallLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Адрес доставки"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor(red: 0.329,
+                                  green: 0.557,
+                                  blue: 1,
+                                  alpha: 1)
+        label.backgroundColor = .white
+        label.isHidden = true
+        return label
+    }()
+
+    lazy var dropTableView: UITableView = {
+        let tabelView = UITableView(frame: .zero, style: .plain)
+
+        return tabelView
+    }()
+    
+    lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self,
+                         action: #selector(onSaveButtonTap),
+                         for: .touchUpInside)
+        button.backgroundColor = UIColor(red: 0.329,
+                                          green: 0.557,
+                                          blue: 1,
+                                          alpha: 1)
+
+        button.layer.cornerRadius = 10
+        button.setTitle("Сохранить", for: .normal)
+        return button
+    }()
+    
+    lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Обязательное поле"
+        label.textColor = UIColor(red: 0.958, green: 0.504, blue: 0.475, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.sizeToFit()
+        label.isHidden = true
+        return label
+    }()
+    
     let adressesArray = ["ул. Большая Садовая",
                          "пр. Кировский",
                          "пр. Ворошиловский",
@@ -19,202 +97,150 @@ class DropDownViewController: UIViewController {
                          "пл. Ленина",
                          "бул. Комарова",
                          "пр. Королёва"]
-//    var adressesArray: Array<String> = .init()
+//    let adressesArray: [String] = []
 
     let headerView = DropDownHeader()
-    var hideTableView = false
-
-//    lazy var button: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("Добавить", for: .normal)
-//        button.setTitleColor(.blue, for: .normal)
-//        button.addTarget(self, action: #selector(addAdress), for: .touchUpInside)
-//        return button
-//    }()
+    var isTabelViewSmall = false
     
-    let smallLabel = UILabel()
-    
-//    let customHeader = UIView(frame: CGRect(x: 0,
-//                                            y: 0,
-//                                            width: 200,
-//                                            height: 48))
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupStackView()
+        setupAdressLabel()
         setupTabelView()
-        view.addSubview(smallLabel)
-
-        smallLabel.text = "Адрес доставки"
-        smallLabel.font = UIFont.systemFont(ofSize: 12)
-        smallLabel.textColor = UIColor(red: 0.329, green: 0.557, blue: 1, alpha: 1)
-        smallLabel.backgroundColor = .white
-        smallLabel.isHidden = true
-        smallLabel.snp.makeConstraints({
-            $0.bottom.equalTo(dropTableView.snp.top).inset(9)
-            $0.leading.equalTo(dropTableView.snp.leading).inset(20)
-            $0.height.equalTo(18)
-            $0.width.equalTo(95)
-        })
+        setupSmallLabel()
+        setupSaveButton()
     }
 
-    func setupTabelView() {
-        view.addSubview(dropTableView)
+    func setupStackView() {
+        view.addSubview(globalView)
+        globalView.addSubview(adressLabel)
+        globalView.addSubview(dropTableView)
+        view.addSubview(errorLabel)
         
+        globalView.snp.makeConstraints {
+            $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+            $0.top.equalToSuperview().offset(150)
+            $0.height.equalTo(48)
+        }
+        
+        errorLabel.snp.makeConstraints { make in
+            make.top.equalTo(globalView.snp.bottom).inset(15)
+            make.height.equalTo(50)
+            make.leading.equalToSuperview().inset(36)
+        }
+    }
+    
+    func setupAdressLabel() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureForAdressLabel))
+        adressLabel.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    func setupTabelView() {
         dropTableView.delegate = self
         dropTableView.dataSource = self
         dropTableView.tintColor = .black
         dropTableView.separatorStyle = .none
         
         dropTableView.contentInsetAdjustmentBehavior = .never
-        dropTableView.register(DropDownCell.self, forCellReuseIdentifier: DropDownCell.reuseIdentifier)
-        dropTableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-        dropTableView.register(DropDownHeader.self, forHeaderFooterViewReuseIdentifier: DropDownHeader.reuseIdentifier)
-        dropTableView.isScrollEnabled = false
-        dropTableView.layer.cornerRadius = 20
-        dropTableView.layer.borderColor = UIColor(red: 0.329, green: 0.557, blue: 1, alpha: 1).cgColor
-        dropTableView.layer.borderWidth = 1
-        //        dropTableView.tableHeaderView = headerTabelView()
-        dropTableView.sectionFooterHeight = 20
+        
+        dropTableView.register(DropDownCell.self,
+                               forCellReuseIdentifier: DropDownCell.reuseIdentifier)
+        dropTableView.register(UITableViewCell.self,
+                               forCellReuseIdentifier: "UITableViewCell")
+        dropTableView.register(ButtonCell.self,
+                               forCellReuseIdentifier: ButtonCell.reuseIdentifier)
+        
         dropTableView.snp.makeConstraints {
-            $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-            $0.top.equalToSuperview().offset(150)
-            $0.height.equalTo(48)
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.top.equalTo(adressLabel.snp.bottom)
+            $0.bottom.equalTo(globalView.snp.bottom)
         }
+        
+        adressLabel.snp.makeConstraints {
+            $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+            $0.height.equalTo(48)
+            $0.top.equalToSuperview()
+        }
+        
+        adressLabel.addSubview(arrowImage)
+        arrowImage.snp.makeConstraints { make in
+            make.height.width.equalTo(24)
+            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    func setupSmallLabel() {
+        view.addSubview(smallLabel)
 
-        
-        
-        if #available(iOS 15, *) {
-            print("This code only runs on iOS 15 and up")
-            dropTableView.sectionHeaderTopPadding = 0
-        } else {
-            print("This code only runs on iOS 14 and lower")
+        smallLabel.snp.makeConstraints({
+            $0.bottom.equalTo(adressLabel.snp.top).inset(9)
+            $0.leading.equalTo(globalView.snp.leading).inset(20)
+            $0.height.equalTo(18)
+            $0.width.equalTo(95)
+        })
+    }
+    
+    func setupSaveButton() {
+        view.addSubview(saveButton)
+        saveButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(150)
+            make.width.equalTo(100)
+            make.height.equalTo(50)
+            make.centerX.equalToSuperview()
         }
     }
     
     @objc
-    func hideTabelViewsCell() {
+    func gestureForAdressLabel() {
         changeTableViewSize()
     }
     
-//    @objc
-//    func addAdress(_ adress: String) {
-//        dropTableView.reloadData()
-//    }
-//
-//    func addAdressToArray(_ adress: String) {
-//        adressesArray.append(adress)
-//    }
+    @objc
+    func onSaveButtonTap() {
+        if let text = adressLabel.text,
+           text.contains("Адрес доставки") {
+            globalView.layer.borderColor = UIColor.red.cgColor
+            errorLabel.isHidden = false
+        } else {
+            globalView.layer.borderColor = UIColor(red: 0.329,
+                                                   green: 0.557,
+                                                   blue: 1,
+                                                   alpha: 1).cgColor
+            errorLabel.isHidden = true
+
+        }
+    }
     
     func changeHeaderTitle(_ indexPath: Int) {
-        headerView.label.text = adressesArray[indexPath]
-        headerView.label.textColor = .black
+        adressLabel.text = adressesArray[indexPath]
+        adressLabel.textColor = .black
     }
     
-    func changeTableViewSize() {      
-        hideTableView.toggle()
-        
-        if hideTableView {
-            dropTableView.isScrollEnabled = true
-            dropTableView.snp.remakeConstraints {            $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-                $0.top.equalToSuperview().offset(150)
-                $0.height.equalTo(240)
-            }
-            dropTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        } else {
-            dropTableView.isScrollEnabled = false
-            dropTableView.snp.remakeConstraints {
+    func changeTableViewSize() {
+        isTabelViewSmall.toggle()
+
+        if isTabelViewSmall {
+            globalView.snp.remakeConstraints {
                 $0.directionalHorizontalEdges.equalToSuperview().inset(16)
                 $0.top.equalToSuperview().offset(150)
-                //                $0.height.equalTo(headerView.snp.height)
+                $0.height.equalTo(220)
+            }
+            arrowImage.image = UIImage(named: "Caret left")
+        } else {
+            globalView.snp.remakeConstraints {
+                $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+                $0.top.equalToSuperview().offset(150)
                 $0.height.equalTo(48)
             }
+            arrowImage.image = UIImage(named: "down")
         }
     }
     
-    private func headerTabelView() -> UIView {
-        let view = UIView(frame: CGRect(x: 0,
-                                        y: 0,
-                                        width: self.dropTableView.frame.width,
-                                        height: 50))
-        view.backgroundColor = .green
-        return view
-    }
-}
-
-extension DropDownViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        changeHeaderTitle(indexPath.row)
-        smallLabel.isHidden = false
-//        headerView.bringSubviewToFront(headerView.smallLabel)
-        changeTableViewSize()
-        dropTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-//        dropTableView.scrollToRow(at: indexPath, at: .top, animated: true)
-
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let tap = UITapGestureRecognizer(target: self,
-                                         action: #selector(self.hideTabelViewsCell))
-
-        headerView.addGestureRecognizer(tap)
-//        headerView.tintColor = UIColor(red: 0.894, green: 0.937, blue: 0.988, alpha: 1)
-        headerView.tintColor = .white
-        headerView.setupPlaceholder()
-        headerView.layoutSubviews()
-        return headerView
-    }
-}
-
-extension DropDownViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        adressesArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = dropTableView.dequeueReusableCell(withIdentifier: DropDownCell.reuseIdentifier,
-                                                     for: indexPath)
-        
-        cell.textLabel?.text = adressesArray[indexPath.row]
-        cell.selectionStyle = .none
-//        dropTableView.isScrollEnabled = true
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        48
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        48
-    }
-}
-
-
-class DropDownCell: UITableViewCell {
-    
-    static var reuseIdentifier: String {
-        String(describing: self)
-    }
-        
-//    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
-//        super.setHighlighted(highlighted, animated: animated)
-//
-//        if highlighted == true {
-//            self.contentView.backgroundColor = .blue.withAlphaComponent(0.1)
-//        } else {
-//            self.contentView.backgroundColor = .white
-//        }
-//    }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        if selected == true {
-            self.contentView.backgroundColor = UIColor(red: 0.894, green: 0.937, blue: 0.988, alpha: 1)
-        } else {
-            self.contentView.backgroundColor = .white
-        }
+    @objc
+    func pushViewController() {
+        let vc = SecondViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
