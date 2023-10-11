@@ -75,15 +75,15 @@ class ButtonCell: UITableViewCell {
                    count: Int) {
         delegate = model.deleagte
         self.addSubview(label)
-        
+        self.addSubview(adressLabel)
+
         if count > 0 {
             label.snp.makeConstraints { make in
                 make.leading.equalToSuperview().inset(16)
                 make.centerY.equalToSuperview()
             }
+            adressLabel.isHidden = true
         } else {
-            self.addSubview(adressLabel)
-
             label.snp.makeConstraints { make in
                 make.trailing.equalToSuperview().inset(16)
                 make.centerY.equalToSuperview()
@@ -93,6 +93,7 @@ class ButtonCell: UITableViewCell {
                 make.leading.equalToSuperview().inset(16)
                 make.centerY.equalToSuperview()
             }
+            adressLabel.isHidden = false
         }
     }
 }

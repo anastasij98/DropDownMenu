@@ -54,6 +54,17 @@ extension DropDownViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         48
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            adressesArray.remove(at: indexPath.row )
+            dropTableView.deleteRows(at: [indexPath], with: .left)
+        }
+    }
 }
 
 

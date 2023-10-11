@@ -8,11 +8,6 @@
 import UIKit
 import SnapKit
 
-protocol CustomCellDelegate: AnyObject {
-    
-    func pushViewController()
-}
-
 class DropDownViewController: UIViewController, CustomCellDelegate {
 
     lazy var globalView: UIView = {
@@ -89,15 +84,15 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
         return label
     }()
     
-    let adressesArray = ["ул. Большая Садовая",
-                         "пр. Кировский",
-                         "пр. Ворошиловский",
-                         "ул. Зорге",
-                         "ул. Извилистая",
-                         "пл. Ленина",
-                         "бул. Комарова",
-                         "пр. Королёва"]
-//    let adressesArray: [String] = []
+//    var adressesArray = ["ул. Большая Садовая",
+//                         "пр. Кировский",
+//                         "пр. Ворошиловский",
+//                         "ул. Зорге",
+//                         "ул. Извилистая",
+//                         "пл. Ленина",
+//                         "бул. Комарова",
+//                         "пр. Королёва"]
+    var adressesArray: [String] = []
 
     let headerView = DropDownHeader()
     var isTabelViewSmall = false
@@ -105,23 +100,58 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupStackView()
+        addViews()
+        setupLayouts()
         setupAdressLabel()
         setupTabelView()
-        setupSmallLabel()
-        setupSaveButton()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        changeTableViewSize()
     }
 
-    func setupStackView() {
+    func addViews() {
         view.addSubview(globalView)
         globalView.addSubview(adressLabel)
         globalView.addSubview(dropTableView)
+        adressLabel.addSubview(arrowImage)
+        view.addSubview(smallLabel)
         view.addSubview(errorLabel)
-        
+        view.addSubview(saveButton)
+    }
+    
+    func setupLayouts() {
         globalView.snp.makeConstraints {
             $0.directionalHorizontalEdges.equalToSuperview().inset(16)
             $0.top.equalToSuperview().offset(150)
             $0.height.equalTo(48)
+        }
+        
+        adressLabel.snp.makeConstraints {
+            $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+            $0.height.equalTo(48)
+            $0.top.equalToSuperview()
+        }
+        
+        arrowImage.snp.makeConstraints { make in
+            make.height.width.equalTo(24)
+            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+
+        smallLabel.snp.makeConstraints({
+            $0.bottom.equalTo(adressLabel.snp.top).inset(9)
+            $0.leading.equalTo(globalView.snp.leading).inset(20)
+            $0.height.equalTo(18)
+            $0.width.equalTo(95)
+        })
+
+        dropTableView.snp.makeConstraints {
+            $0.directionalHorizontalEdges.equalToSuperview()
+            $0.top.equalTo(adressLabel.snp.bottom)
+            $0.bottom.equalTo(globalView.snp.bottom)
         }
         
         errorLabel.snp.makeConstraints { make in
@@ -129,8 +159,15 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
             make.height.equalTo(50)
             make.leading.equalToSuperview().inset(36)
         }
+        
+        saveButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(150)
+            make.width.equalTo(100)
+            make.height.equalTo(50)
+            make.centerX.equalToSuperview()
+        }
     }
-    
+
     func setupAdressLabel() {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureForAdressLabel))
         adressLabel.addGestureRecognizer(gestureRecognizer)
@@ -150,46 +187,6 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
                                forCellReuseIdentifier: "UITableViewCell")
         dropTableView.register(ButtonCell.self,
                                forCellReuseIdentifier: ButtonCell.reuseIdentifier)
-        
-        dropTableView.snp.makeConstraints {
-            $0.directionalHorizontalEdges.equalToSuperview()
-            $0.top.equalTo(adressLabel.snp.bottom)
-            $0.bottom.equalTo(globalView.snp.bottom)
-        }
-        
-        adressLabel.snp.makeConstraints {
-            $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-            $0.height.equalTo(48)
-            $0.top.equalToSuperview()
-        }
-        
-        adressLabel.addSubview(arrowImage)
-        arrowImage.snp.makeConstraints { make in
-            make.height.width.equalTo(24)
-            make.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-    }
-    
-    func setupSmallLabel() {
-        view.addSubview(smallLabel)
-
-        smallLabel.snp.makeConstraints({
-            $0.bottom.equalTo(adressLabel.snp.top).inset(9)
-            $0.leading.equalTo(globalView.snp.leading).inset(20)
-            $0.height.equalTo(18)
-            $0.width.equalTo(95)
-        })
-    }
-    
-    func setupSaveButton() {
-        view.addSubview(saveButton)
-        saveButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(150)
-            make.width.equalTo(100)
-            make.height.equalTo(50)
-            make.centerX.equalToSuperview()
-        }
     }
     
     @objc
@@ -209,7 +206,6 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
                                                    blue: 1,
                                                    alpha: 1).cgColor
             errorLabel.isHidden = true
-
         }
     }
     
@@ -222,10 +218,30 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
         isTabelViewSmall.toggle()
 
         if isTabelViewSmall {
-            globalView.snp.remakeConstraints {
-                $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-                $0.top.equalToSuperview().offset(150)
-                $0.height.equalTo(220)
+            if adressesArray.count == 0 {
+                globalView.snp.remakeConstraints {
+                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+                    $0.top.equalToSuperview().offset(150)
+                    $0.height.equalTo(96)
+                }
+            } else if adressesArray.count == 1 {
+                globalView.snp.remakeConstraints {
+                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+                    $0.top.equalToSuperview().offset(150)
+                    $0.height.equalTo(144)
+                }
+            } else if adressesArray.count == 2 {
+                globalView.snp.remakeConstraints {
+                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+                    $0.top.equalToSuperview().offset(150)
+                    $0.height.equalTo(192)
+                }
+            } else if adressesArray.count == 3 {
+                globalView.snp.remakeConstraints {
+                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+                    $0.top.equalToSuperview().offset(150)
+                    $0.height.equalTo(220)
+                }
             }
             arrowImage.image = UIImage(named: "Caret left")
         } else {
@@ -240,7 +256,16 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
     
     @objc
     func pushViewController() {
-        let vc = SecondViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let viewContorller = SecondViewController()
+        viewContorller.deleagte = self
+        self.navigationController?.pushViewController(viewContorller, animated: true)
+    }
+}
+
+extension DropDownViewController: PassTextProtocol {
+    
+    func passText(_ newAdress: String) {
+        adressesArray.append(newAdress)
+        dropTableView.reloadData()
     }
 }

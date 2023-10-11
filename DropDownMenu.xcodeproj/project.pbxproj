@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4765DDF82AD54198007875CD /* PassTextProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4765DDF72AD54198007875CD /* PassTextProtocol.swift */; };
+		4765DDFB2AD558EE007875CD /* CellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4765DDFA2AD558EE007875CD /* CellDelegate.swift */; };
 		477623642AD42518003FBA97 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477623632AD42518003FBA97 /* SecondViewController.swift */; };
 		477C76B52A97470E006DA104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76B42A97470E006DA104 /* AppDelegate.swift */; };
 		477C76B72A97470E006DA104 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76B62A97470E006DA104 /* SceneDelegate.swift */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		312D7D89A0CD9CFEF8D18BF9 /* Pods-DropDownMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropDownMenu.release.xcconfig"; path = "Target Support Files/Pods-DropDownMenu/Pods-DropDownMenu.release.xcconfig"; sourceTree = "<group>"; };
+		4765DDF72AD54198007875CD /* PassTextProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassTextProtocol.swift; sourceTree = "<group>"; };
+		4765DDFA2AD558EE007875CD /* CellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDelegate.swift; sourceTree = "<group>"; };
 		477623632AD42518003FBA97 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		477C76B12A97470E006DA104 /* DropDownMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropDownMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		477C76B42A97470E006DA104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +54,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4765DDF92AD558CC007875CD /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4765DDF72AD54198007875CD /* PassTextProtocol.swift */,
+				4765DDFA2AD558EE007875CD /* CellDelegate.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		477C76A82A97470E006DA104 = {
 			isa = PBXGroup;
 			children = (
@@ -71,9 +84,10 @@
 		477C76B32A97470E006DA104 /* DropDownMenu */ = {
 			isa = PBXGroup;
 			children = (
-				47C9B5172AA720C5009A98C8 /* TabelView */,
 				477C76B42A97470E006DA104 /* AppDelegate.swift */,
 				477C76B62A97470E006DA104 /* SceneDelegate.swift */,
+				4765DDF92AD558CC007875CD /* Protocols */,
+				47C9B5172AA720C5009A98C8 /* TabelView */,
 				477C76B82A97470E006DA104 /* ViewController.swift */,
 				477623632AD42518003FBA97 /* SecondViewController.swift */,
 				477C76CA2A97AF0E006DA104 /* HeaderView.swift */,
@@ -231,8 +245,10 @@
 				477C76B92A97470E006DA104 /* ViewController.swift in Sources */,
 				47C9B51B2AA72129009A98C8 /* TabelViewCell.swift in Sources */,
 				477623642AD42518003FBA97 /* SecondViewController.swift in Sources */,
+				4765DDFB2AD558EE007875CD /* CellDelegate.swift in Sources */,
 				477C76B52A97470E006DA104 /* AppDelegate.swift in Sources */,
 				477C76B72A97470E006DA104 /* SceneDelegate.swift in Sources */,
+				4765DDF82AD54198007875CD /* PassTextProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

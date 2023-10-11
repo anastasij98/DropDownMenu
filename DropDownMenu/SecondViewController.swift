@@ -11,9 +11,12 @@ import SnapKit
 
 class SecondViewController: UIViewController {
     
+    weak var deleagte: PassTextProtocol?
+    
     lazy var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Введите адрес доставки"
+        textField.autocapitalizationType = .none
         textField.layer.borderColor = UIColor(red: 0.329,
                                               green: 0.557,
                                               blue: 1,
@@ -49,7 +52,11 @@ class SecondViewController: UIViewController {
     
     @objc
     func onSaveButtonTap() {
-        print(">>>saved")
+        guard let text = textField.text else {
+            return
+        }
+        deleagte?.passText(text)
+        popViewController()
     }
     
     func setupView() {
@@ -67,6 +74,10 @@ class SecondViewController: UIViewController {
             $0.top.equalTo(textField.snp.bottom).offset(100)
             $0.height.equalTo(50)
         }
+    }
+    
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
 }
 
