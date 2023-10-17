@@ -13,10 +13,7 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
     lazy var globalView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.layer.borderColor = UIColor(red: 0.329,
-                                         green: 0.557,
-                                         blue: 1,
-                                         alpha: 1).cgColor
+        view.layer.borderColor = .mainBlue
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 20
         return view
@@ -54,8 +51,8 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
     }()
 
     lazy var dropTableView: UITableView = {
-        let tabelView = UITableView(frame: .zero, style: .plain)
-
+        let tabelView = DynamicSizeTabelView(maxHeight: 164)
+        
         return tabelView
     }()
     
@@ -84,22 +81,21 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
         return label
     }()
     
-//    var adressesArray = ["ул. Большая Садовая",
-//                         "пр. Кировский",
-//                         "пр. Ворошиловский",
-//                         "ул. Зорге",
-//                         "ул. Извилистая",
-//                         "пл. Ленина",
-//                         "бул. Комарова",
-//                         "пр. Королёва"]
     var adressesArray: [String] = []
 
     let headerView = DropDownHeader()
     var isTabelViewSmall = false
+    var isAdressSelected = true
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        chagleColor()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         addViews()
         setupLayouts()
         setupAdressLabel()
@@ -135,18 +131,18 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
             $0.top.equalToSuperview()
         }
         
-        arrowImage.snp.makeConstraints { make in
-            make.height.width.equalTo(24)
-            make.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
+        arrowImage.snp.makeConstraints {
+            $0.height.width.equalTo(24)
+            $0.trailing.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
 
-        smallLabel.snp.makeConstraints({
+        smallLabel.snp.makeConstraints {
             $0.bottom.equalTo(adressLabel.snp.top).inset(9)
             $0.leading.equalTo(globalView.snp.leading).inset(20)
             $0.height.equalTo(18)
             $0.width.equalTo(95)
-        })
+        }
 
         dropTableView.snp.makeConstraints {
             $0.directionalHorizontalEdges.equalToSuperview()
@@ -154,23 +150,29 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
             $0.bottom.equalTo(globalView.snp.bottom)
         }
         
-        errorLabel.snp.makeConstraints { make in
-            make.top.equalTo(globalView.snp.bottom).inset(15)
-            make.height.equalTo(50)
-            make.leading.equalToSuperview().inset(36)
+        errorLabel.snp.makeConstraints {
+            $0.top.equalTo(globalView.snp.bottom).inset(15)
+            $0.height.equalTo(50)
+            $0.leading.equalToSuperview().inset(36)
         }
         
-        saveButton.snp.makeConstraints { make in
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(150)
-            make.width.equalTo(100)
-            make.height.equalTo(50)
-            make.centerX.equalToSuperview()
+        saveButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(150)
+            $0.width.equalTo(100)
+            $0.height.equalTo(50)
+            $0.centerX.equalToSuperview()
         }
     }
-
+    
     func setupAdressLabel() {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(gestureForAdressLabel))
         adressLabel.addGestureRecognizer(gestureRecognizer)
+        
+        if let text = adressLabel.text,
+           text.contains("Адрес доставки") {
+            globalView.layer.borderColor = .white
+            globalView.backgroundColor = .lightGray
+        }
     }
     
     func setupTabelView() {
@@ -192,21 +194,38 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
     @objc
     func gestureForAdressLabel() {
         changeTableViewSize()
+        chagleColor()
+    }
+    
+    func chagleColor() {
+        isAdressSelected.toggle()
+        if let text = adressLabel.text,
+           text.contains("Адрес доставки") && !isAdressSelected {
+            globalView.backgroundColor = .lightGray
+            globalView.layer.borderColor = UIColor.white.cgColor
+        } else {
+            globalView.backgroundColor = .white
+            globalView.layer.borderColor = .mainBlue
+        }
     }
     
     @objc
     func onSaveButtonTap() {
         if let text = adressLabel.text,
            text.contains("Адрес доставки") {
-            globalView.layer.borderColor = UIColor.red.cgColor
+            globalView.layer.borderColor = .red
             errorLabel.isHidden = false
         } else {
-            globalView.layer.borderColor = UIColor(red: 0.329,
-                                                   green: 0.557,
-                                                   blue: 1,
-                                                   alpha: 1).cgColor
+            globalView.layer.borderColor = .mainBlue
             errorLabel.isHidden = true
         }
+    }
+    
+    @objc
+    func pushViewController() {
+        let viewContorller = SecondViewController()
+        viewContorller.deleagte = self
+        self.navigationController?.pushViewController(viewContorller, animated: true)
     }
     
     func changeHeaderTitle(_ indexPath: Int) {
@@ -216,34 +235,13 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
     
     func changeTableViewSize() {
         isTabelViewSmall.toggle()
-
+        
         if isTabelViewSmall {
-            if adressesArray.count == 0 {
-                globalView.snp.remakeConstraints {
-                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-                    $0.top.equalToSuperview().offset(150)
-                    $0.height.equalTo(96)
-                }
-            } else if adressesArray.count == 1 {
-                globalView.snp.remakeConstraints {
-                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-                    $0.top.equalToSuperview().offset(150)
-                    $0.height.equalTo(144)
-                }
-            } else if adressesArray.count == 2 {
-                globalView.snp.remakeConstraints {
-                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-                    $0.top.equalToSuperview().offset(150)
-                    $0.height.equalTo(192)
-                }
-            } else if adressesArray.count == 3 {
-                globalView.snp.remakeConstraints {
-                    $0.directionalHorizontalEdges.equalToSuperview().inset(16)
-                    $0.top.equalToSuperview().offset(150)
-                    $0.height.equalTo(220)
-                }
+            globalView.snp.remakeConstraints {
+                $0.directionalHorizontalEdges.equalToSuperview().inset(16)
+                $0.top.equalToSuperview().offset(150)
             }
-            arrowImage.image = UIImage(named: "Caret left")
+            arrowImage.image = UIImage(named: "up")
         } else {
             globalView.snp.remakeConstraints {
                 $0.directionalHorizontalEdges.equalToSuperview().inset(16)
@@ -252,13 +250,6 @@ class DropDownViewController: UIViewController, CustomCellDelegate {
             }
             arrowImage.image = UIImage(named: "down")
         }
-    }
-    
-    @objc
-    func pushViewController() {
-        let viewContorller = SecondViewController()
-        viewContorller.deleagte = self
-        self.navigationController?.pushViewController(viewContorller, animated: true)
     }
 }
 
