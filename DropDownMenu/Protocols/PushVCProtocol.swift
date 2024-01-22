@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CustomCellDelegate: AnyObject {
+protocol PushViewControllerProtocol: AnyObject {
     
     func pushViewController()
 }

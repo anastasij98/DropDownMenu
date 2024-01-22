@@ -11,12 +11,12 @@ import SnapKit
 
 struct ButtonCellModel {
     
-    var deleagte: CustomCellDelegate?
+//    var deleagte: PushViewControllerProtocol?
 }
 
 class ButtonCell: UITableViewCell {
     
-    weak var delegate : CustomCellDelegate?
+//    weak var delegate : PushViewControllerProtocol?
     
     lazy var label: UILabel = {
         let label = UILabel()
@@ -68,7 +68,7 @@ class ButtonCell: UITableViewCell {
     
     func setupCell(model: ButtonCellModel,
                    count: Int) {
-        delegate = model.deleagte
+//        delegate = model.deleagte
         self.addSubview(label)
         self.addSubview(adressLabel)
 
