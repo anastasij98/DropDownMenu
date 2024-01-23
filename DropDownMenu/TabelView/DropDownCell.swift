@@ -9,11 +9,7 @@ import Foundation
 import UIKit
 
 class DropDownCell: UITableViewCell {
-    
-    static var reuseIdentifier: String {
-        String(describing: self)
-    }
-    
+
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
         

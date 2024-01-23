@@ -11,11 +11,7 @@ import SnapKit
 class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
 
     lazy var globalView: DropDownView = {
-        let view = DropDownView(adressesArray: ["1", "2", "3", "4"])
-        view.clipsToBounds = true
-        view.layer.borderColor = .mainBlue
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 20
+        let view = DropDownView(adressesArray: ["1", "2", "3"])
         return view
     }()
 
@@ -43,7 +39,7 @@ class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
         setupLayouts()
         bindViews()
         globalView.didSelect(completion: { selectedText, index in
-            print(">>> selectedText \(selectedText) \n index \(index)")
+            print(">>> selectedText \(selectedText) \n >>> index \(index)")
         })
         globalView.didSelectLastCell {
             self.changeBackgroundColor()

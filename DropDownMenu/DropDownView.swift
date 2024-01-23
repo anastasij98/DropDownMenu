@@ -13,7 +13,6 @@ class DropDownView: UIView {
     lazy var globalView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.layer.borderColor = .red
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 20
         view.isUserInteractionEnabled = true
@@ -29,7 +28,6 @@ class DropDownView: UIView {
                                   green: 0.732,
                                   blue: 0.804,
                                   alpha: 1)
-        label.isUserInteractionEnabled = true
         return label
     }()
     
@@ -54,22 +52,21 @@ class DropDownView: UIView {
 
     lazy var tableView: UITableView = {
         let tableView = DynamicSizeTabelView(maxHeight: 164)
-        tableView.backgroundColor = .mainBlue
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .black
         tableView.tintColor = .black
         tableView.separatorStyle = .none
-        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.allowsSelection = true
         tableView.isUserInteractionEnabled = true
-        tableView.allowsSelection = true
-        tableView.allowsSelection = true
+        tableView.contentInsetAdjustmentBehavior = .never
         return tableView
     }()
     
     lazy var errorLabel: UILabel = {
         let label = UILabel()
         label.text = "Обязательное поле"
-        label.textColor = UIColor(red: 0.958, green: 0.504, blue: 0.475, alpha: 1)
+        label.textColor = UIColor(red: 0.958,
+                                  green: 0.504,
+                                  blue: 0.475,
+                                  alpha: 1)
         label.font = UIFont.systemFont(ofSize: 12)
         label.sizeToFit()
         label.isHidden = true
@@ -91,7 +88,7 @@ class DropDownView: UIView {
         self.addViews()
         self.setupLayouts()
         self.bindViews()
-        self.setupAdressLabel()
+        self.changeColor()
         self.setupTabelView()
     }
     
@@ -151,24 +148,16 @@ class DropDownView: UIView {
         adressLabel.addGestureRecognizer(tapGesture)
     }
     
-    func setupAdressLabel() {
-        if let text = adressLabel.text,
-           text.contains("Адрес доставки") {
-            globalView.layer.borderColor = .white
-            globalView.backgroundColor = .lightGray
-        }
-    }
-    
     func setupTabelView() {
         tableView.delegate = self
         tableView.dataSource = self
-
-        tableView.register(DropDownCell.self,
-                               forCellReuseIdentifier: DropDownCell.reuseIdentifier)
+        
         tableView.register(UITableViewCell.self,
-                               forCellReuseIdentifier: "UITableViewCell")
+                           forCellReuseIdentifier: UITableViewCell.reuseIdentifier)
+        tableView.register(DropDownCell.self,
+                           forCellReuseIdentifier: DropDownCell.reuseIdentifier)
         tableView.register(ButtonCell.self,
-                               forCellReuseIdentifier: ButtonCell.reuseIdentifier)
+                           forCellReuseIdentifier: ButtonCell.reuseIdentifier)
     }
     
     //MARK: -
@@ -181,31 +170,43 @@ class DropDownView: UIView {
     //MARK: - Change tabelView size
     @objc
     func changeTableViewSize() {
+        changeColor()
         isTabelViewSmall ? showTabelView() : hideTabelView()
         isTabelViewSmall.toggle()
     }
+
+    func showTabelView() {
+        let height = adressesArray.count == 0 ? 48 : ((adressesArray.count + 1) * 48)
+        UIView.animate(withDuration: 0.3,
+                       animations: {
+            self.snp.updateConstraints {
+                $0.height.equalTo(height)
+            }
+            self.layoutSubviews()
+        })
+        globalView.layer.borderColor = .mainBlue
+        smallLabel.textColor = UIColor(red: 0.329,
+                                       green: 0.557,
+                                       blue: 1,
+                                       alpha: 1)
+        self.arrowImage.image = UIImage(named: "up")
+    }
     
     func hideTabelView() {
-        UIView.animate(withDuration: 1,
+        UIView.animate(withDuration: 0.3,
                        animations: {
             self.snp.updateConstraints {
                 $0.height.equalTo(48)
             }
-            self.globalView.layoutSubviews()
-        }
-        )
-        self.arrowImage.image = UIImage(named: "down")
-    }
-    
-    func showTabelView() {
-        UIView.animate(withDuration: 1,
-                       animations: {
-            self.snp.updateConstraints {
-                $0.height.equalTo(200)
-            }
-            self.globalView.layoutSubviews()
+            self.layoutSubviews()
         })
-        self.arrowImage.image = UIImage(named: "up")
+        globalView.backgroundColor = .white
+        globalView.layer.borderColor = UIColor(red: 0.677, green: 0.732, blue: 0.804, alpha: 1).cgColor
+        smallLabel.textColor = UIColor(red: 0.68,
+                                       green: 0.73,
+                                       blue: 0.8,
+                                       alpha: 1)
+        self.arrowImage.image = UIImage(named: "down")
     }
     
     //MARK: -
@@ -229,16 +230,16 @@ class DropDownView: UIView {
         adressLabel.textColor = .black
     }
 
-//    func changeState() {
-//        if let text = adressLabel.text,
-//           text.contains("Адрес доставки") {
-//            globalView.layer.borderColor = .red
-//            errorLabel.isHidden = false
-//        } else {
-//            globalView.layer.borderColor = .mainBlue
-//            errorLabel.isHidden = true
-//        }
-//    }
+    func changeState() {
+        if let text = adressLabel.text,
+           text.contains("Адрес доставки") {
+            globalView.layer.borderColor = .red
+            errorLabel.isHidden = false
+        } else {
+            globalView.layer.borderColor = .mainBlue
+            errorLabel.isHidden = true
+        }
+    }
 }
 
 extension DropDownView: PassTextProtocol {
@@ -293,7 +294,7 @@ extension DropDownView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row != adressesArray.count  {
+        if indexPath.row != adressesArray.count && adressesArray.count != 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownCell.reuseIdentifier,
                                                      for: indexPath)
             cell.textLabel?.text = adressesArray[indexPath.row]
@@ -303,7 +304,6 @@ extension DropDownView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonCell.reuseIdentifier) as? ButtonCell else {
                 return UITableViewCell()
             }
-//            let model = ButtonCellModel(deleagte: self)
             cell.setupCell(model: ButtonCellModel(),
                            count: adressesArray.count)
             return cell
@@ -321,5 +321,3 @@ extension DropDownView: UITableViewDataSource {
         }
     }
 }
-
-
