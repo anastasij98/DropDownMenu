@@ -9,15 +9,8 @@ import Foundation
 import UIKit
 import SnapKit
 
-struct ButtonCellModel {
-    
-//    var deleagte: PushViewControllerProtocol?
-}
-
 class ButtonCell: UITableViewCell {
-    
-//    weak var delegate : PushViewControllerProtocol?
-    
+        
     lazy var label: UILabel = {
         let label = UILabel()
         label.text = "Добавить"
@@ -45,26 +38,14 @@ class ButtonCell: UITableViewCell {
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         super.setHighlighted(highlighted, animated: animated)
 
-//        if highlighted == true {
-//            self.contentView.backgroundColor = UIColor(red: 0.894, green: 0.937, blue: 0.988, alpha: 1)
-//        } else {
-//            self.contentView.backgroundColor = .clear
-//        }
+        if highlighted == true {
+            self.contentView.backgroundColor = UIColor(red: 0.894, green: 0.937, blue: 0.988, alpha: 1)
+        } else {
+            self.contentView.backgroundColor = .clear
+        }
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-//        if selected == true {
-//            self.contentView.backgroundColor = UIColor(red: 0.894, green: 0.937, blue: 0.988, alpha: 1)
-//        } else {
-//            self.contentView.backgroundColor = .clear
-//        }
-    }
-    
-    func setupCell(model: ButtonCellModel,
-                   count: Int) {
-//        delegate = model.deleagte
+    func setupCell(count: Int) {
         self.addSubview(label)
         self.addSubview(adressLabel)
 

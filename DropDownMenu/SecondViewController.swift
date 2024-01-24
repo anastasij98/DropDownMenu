@@ -11,7 +11,7 @@ import SnapKit
 
 class SecondViewController: UIViewController {
     
-    weak var deleagte: PassTextProtocol?
+    weak var delegate: PassTextProtocol?
     
     lazy var textField: UITextField = {
         let textField = UITextField()
@@ -55,8 +55,11 @@ class SecondViewController: UIViewController {
         guard let text = textField.text else {
             return
         }
-        deleagte?.passText(text)
+        if !textField.text!.isEmpty {
+            delegate?.passText(text)
+        }
         popViewController()
+        textField.text = ""
     }
     
     func setupView() {

@@ -24,10 +24,7 @@ class DropDownView: UIView {
         label.isUserInteractionEnabled = true
         label.text = "Адрес доставки"
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(red: 0.677,
-                                  green: 0.732,
-                                  blue: 0.804,
-                                  alpha: 1)
+        label.textColor = .mainTextGrayColor
         return label
     }()
     
@@ -73,7 +70,7 @@ class DropDownView: UIView {
         return label
     }()
     
-    var adressesArray: [String] = [""]
+    var dataSource: [String] = []
 
     var isTabelViewSmall = true
     var isAdressSelected = true
@@ -81,10 +78,10 @@ class DropDownView: UIView {
     fileprivate var didSelectCompletion: (String, Int) -> Void = { _, _ in }
     fileprivate var didSelectLastCellCompletion: () -> Void = { }
     
-    init(adressesArray: [String] = [""]) {
+    init(_ dataSource: [String] = []) {
         super.init(frame: .init())
 
-        self.adressesArray = adressesArray
+        self.dataSource = dataSource
         self.addViews()
         self.setupLayouts()
         self.bindViews()
@@ -176,7 +173,8 @@ class DropDownView: UIView {
     }
 
     func showTabelView() {
-        let height = adressesArray.count == 0 ? 48 : ((adressesArray.count + 1) * 48)
+        var height = dataSource.count == 0 ? 96 : ((dataSource.count + 2) * 48)
+        height = height > 212 ? 212 : height
         UIView.animate(withDuration: 0.3,
                        animations: {
             self.snp.updateConstraints {
@@ -185,10 +183,7 @@ class DropDownView: UIView {
             self.layoutSubviews()
         })
         globalView.layer.borderColor = .mainBlue
-        smallLabel.textColor = UIColor(red: 0.329,
-                                       green: 0.557,
-                                       blue: 1,
-                                       alpha: 1)
+        smallLabel.textColor = .mainBlue
         self.arrowImage.image = UIImage(named: "up")
     }
     
@@ -201,11 +196,8 @@ class DropDownView: UIView {
             self.layoutSubviews()
         })
         globalView.backgroundColor = .white
-        globalView.layer.borderColor = UIColor(red: 0.677, green: 0.732, blue: 0.804, alpha: 1).cgColor
-        smallLabel.textColor = UIColor(red: 0.68,
-                                       green: 0.73,
-                                       blue: 0.8,
-                                       alpha: 1)
+        globalView.layer.borderColor = .gray
+        smallLabel.textColor = .gray
         self.arrowImage.image = UIImage(named: "down")
     }
     
@@ -225,9 +217,22 @@ class DropDownView: UIView {
         }
     }
     
+    func changeColorNewAdress() {
+        globalView.layer.borderColor = UIColor(red: 0.677,
+                                               green: 0.732,
+                                               blue: 0.804,
+                                               alpha: 1).cgColor
+        smallLabel.textColor = UIColor(red: 0.68,
+                                       green: 0.73,
+                                       blue: 0.8,
+                                       alpha: 1)
+        smallLabel.isHidden = false
+        adressLabel.textColor = (adressLabel.text?.contains("Адрес доставки") ?? false) ? .lightGray : .black
+    }
+    
     func changeHeaderTitle(_ indexPath: Int) {
-        adressLabel.text = adressesArray[indexPath]
-        adressLabel.textColor = .black
+        adressLabel.text = dataSource[indexPath]
+        adressLabel.textColor = (adressLabel.text?.contains("Адрес доставки") ?? false) ? .lightGray : .black
     }
 
     func changeState() {
@@ -242,13 +247,6 @@ class DropDownView: UIView {
     }
 }
 
-extension DropDownView: PassTextProtocol {
-
-    func passText(_ newAdress: String) {
-//        adressLabel.text = newAdress
-    }
-}
-
 extension DropDownView {
     
     // MARK: Actions Methods
@@ -257,55 +255,52 @@ extension DropDownView {
         didSelectCompletion = completion
     }
     
-    public func didSelectLastCell(completion: @escaping () -> Void) {
+    public func didSelectLastCell(_ viewController: UIViewController, _ secondViewController: UIViewController, completion: @escaping () -> Void) {
         didSelectLastCellCompletion = completion
+    }
+    
+    public func newAdress(_ newAdress: String) {
+        adressLabel.text = newAdress
+        dataSource.append(newAdress)
+        changeColorNewAdress()
+        tableView.reloadData()
     }
 }
 
 extension DropDownView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        globalView.layer.borderColor = UIColor(red: 0.329,
-        //                                               green: 0.557,
-        //                                               blue: 1,
-        //                                               alpha: 1).cgColor
-        //        errorLabel.isHidden = true
         let intIndexPath = indexPath.row
-        if intIndexPath != adressesArray.count  {
+        if intIndexPath != dataSource.count  {
             changeHeaderTitle(intIndexPath)
-            //            smallLabel.isHidden = false
-            changeTableViewSize()
-            
-            let selectedText = adressesArray[intIndexPath]
+            let selectedText = dataSource[intIndexPath]
             didSelectCompletion(selectedText, intIndexPath)
         } else {
-            ////            pushViewController()
             didSelectLastCellCompletion()
-            print(">>> didSelectRowAt")
         }
+        changeTableViewSize()
     }
 }
 
 extension DropDownView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        adressesArray.count + 1
+        dataSource.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.row != adressesArray.count && adressesArray.count != 0 {
+        if indexPath.row != dataSource.count && dataSource.count > 0  {
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownCell.reuseIdentifier,
                                                      for: indexPath)
-            cell.textLabel?.text = adressesArray[indexPath.row]
+            cell.textLabel?.text = dataSource[indexPath.row]
             cell.selectionStyle = .none
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonCell.reuseIdentifier) as? ButtonCell else {
                 return UITableViewCell()
             }
-            cell.setupCell(model: ButtonCellModel(),
-                           count: adressesArray.count)
+            cell.setupCell(count: dataSource.count)
             return cell
         }
     }
@@ -316,7 +311,7 @@ extension DropDownView: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            adressesArray.remove(at: indexPath.row)
+            dataSource.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
         }
     }

@@ -11,7 +11,7 @@ import SnapKit
 class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
 
     lazy var globalView: DropDownView = {
-        let view = DropDownView(adressesArray: ["1", "2", "3"])
+        let view = DropDownView()
         return view
     }()
 
@@ -29,20 +29,22 @@ class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
         button.setTitle("Сохранить", for: .normal)
         return button
     }()
-    
-    var adressesArray: [String] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        globalView.dataSource = []
         addViews()
         setupLayouts()
         bindViews()
+        let vc = SecondViewController()
+        vc.delegate = self
         globalView.didSelect(completion: { selectedText, index in
             print(">>> selectedText \(selectedText) \n >>> index \(index)")
         })
-        globalView.didSelectLastCell {
-            self.changeBackgroundColor()
+        
+        globalView.didSelectLastCell(self, vc) {
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 
@@ -82,6 +84,8 @@ class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @objc
     func onSaveButtonTap() {
+       
+        
         print(">>> saved")
     }
 }
@@ -89,7 +93,6 @@ class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
 extension DropDownViewController: PassTextProtocol {
     
     func passText(_ newAdress: String) {
-        adressesArray.append(newAdress)
-//        dropTableView.reloadData()
+        globalView.newAdress(newAdress)
     }
 }

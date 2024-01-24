@@ -18,6 +18,11 @@ extension CGColor {
         CGColor(red: 0.96, green: 0.97, blue: 0.98, alpha: 1)
     }
     
+    /// (red: 0.677, green: 0.732, blue: 0.804, alpha: 1)
+    static var gray: CGColor {
+        CGColor(red: 0.677, green: 0.732, blue: 0.804, alpha: 1)
+    }
+    
     static var red: CGColor {
         UIColor.red.cgColor
     }
