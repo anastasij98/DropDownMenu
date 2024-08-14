@@ -135,7 +135,7 @@ class DropDownView: UIView {
         errorLabel.snp.makeConstraints {
             $0.top.equalTo(globalView.snp.bottom).inset(15)
             $0.height.equalTo(50)
-            $0.leading.equalToSuperview().inset(36)
+            $0.leading.equalToSuperview().inset(16)
         }
     }
     
@@ -239,6 +239,7 @@ class DropDownView: UIView {
         if let text = adressLabel.text,
            text.contains("Адрес доставки") {
             globalView.layer.borderColor = .red
+            globalView.backgroundColor = .white
             errorLabel.isHidden = false
         } else {
             globalView.layer.borderColor = .mainBlue
@@ -257,6 +258,10 @@ extension DropDownView {
     
     public func didSelectLastCell(_ viewController: UIViewController, _ secondViewController: UIViewController, completion: @escaping () -> Void) {
         didSelectLastCellCompletion = completion
+    }
+    
+    public func checkValidField() {
+        changeState()
     }
     
     public func newAdress(_ newAdress: String) {

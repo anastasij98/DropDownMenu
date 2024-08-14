@@ -29,10 +29,32 @@ class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
         button.setTitle("Сохранить", for: .normal)
         return button
     }()
+    
+    lazy var filterButton: UIButton = {
+        let searchButton = UIButton()
+        searchButton.setImage(UIImage(named: "up"), for: .normal)
+        searchButton.frame.size = CGSize(width: 38, height: 38)
+        searchButton.addTarget(self, action: #selector(changeBackgroundColor), for: .touchUpInside)
+        
+        return searchButton
+    }()
+    
+    lazy var filterButton2: UIBarButtonItem = {
+        let searchButton = UIButton()
+        searchButton.frame.size = CGSize(width: 38, height: 38)
+        searchButton.addTarget(self, action: #selector(changeBackgroundColor), for: .touchUpInside)
+        
+        let button = UIBarButtonItem(customView: searchButton)
+        button.image = UIImage(named: "up")
+        return button
+    }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let navButton = UIBarButtonItem(customView: filterButton)
+        navigationItem.rightBarButtonItem = navButton
+        navigationController?.navigationBar.backgroundColor = .systemPink.withAlphaComponent(0.1)
         globalView.dataSource = []
         addViews()
         setupLayouts()
@@ -74,19 +96,35 @@ class DropDownViewController: UIViewController, UIGestureRecognizerDelegate {
                              for: .touchUpInside)
     }
     
+    @objc
     func changeBackgroundColor() {
         if self.view.backgroundColor == .white {
             self.view.backgroundColor = .green.withAlphaComponent(0.1)
         } else {
             self.view.backgroundColor = .white
         }
+//        filterButton.setImage(UIImage(named: "up"),
+//                              for: .normal)
+        navigationItem.rightBarButtonItem?.image = UIImage(named: "up")
     }
     
     @objc
     func onSaveButtonTap() {
-       
-        
-        print(">>> saved")
+        globalView.checkValidField()
+//        UINavigationBar.appearance().items?.first?.rightBarButtonItem?.image = UIImage(named: "down")?.withRenderingMode(.alwaysOriginal)
+//        navigationItem.rightBarButtonItem?.image = UIImage(named: "down")?.withRenderingMode(.alwaysOriginal)
+//        print(">>>")
+//        navigationController?.navigationItem.rightBarButtonItem?.image = UIImage(named: "down")
+//        navigationController?.navigationBar.items?.last?.rightBarButtonItem?.image = UIImage(named: "down")
+//        navigationItem.rightBarButtonItem = nil
+
+//        filterButton.setImage(UIImage(named: "down"),
+//                              for: .normal)
+//        navigationItem.setRightBarButtonItems([filterButton], animated: true)
+//        navigationItem.rightBarButtonItem?.setBackgroundImage(UIImage(named: "down"),
+//                                                              for: .normal,
+//                                                              barMetrics: .default)
+        navigationItem.rightBarButtonItem?.image = UIImage(named: "down")
     }
 }
 
