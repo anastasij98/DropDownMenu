@@ -107,7 +107,7 @@
 
 /* Begin PBXFileReference section */
 		003DE936497F65F139404851EFDB4C83 /* ImageResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ImageResource.swift; path = Sources/RswiftResources/ImageResource.swift; sourceTree = "<group>"; };
-		0040A43F01CEA277C7C67C5CB5CE2C19 /* Pods-DropDownMenu */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-DropDownMenu"; path = Pods_DropDownMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0040A43F01CEA277C7C67C5CB5CE2C19 /* Pods_DropDownMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropDownMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0226522D1ABF68D078EC4F6E0CBB87A6 /* R.swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = R.swift.modulemap; sourceTree = "<group>"; };
 		06ADEF70ECD6F043A2BAE1428C0EB2AF /* NibResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NibResource.swift; path = Sources/RswiftResources/NibResource.swift; sourceTree = "<group>"; };
 		08ED141201AF522FEDFD49AC65A8EBEC /* DataResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataResource.swift; path = Sources/RswiftResources/DataResource.swift; sourceTree = "<group>"; };
@@ -138,7 +138,7 @@
 		3715972C8D82B77B642181388416F24D /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Sources/ConstraintInsets.swift; sourceTree = "<group>"; };
 		3A8A63992F78A1EEEF8B9EAC69E75C24 /* SnapKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SnapKit-Info.plist"; sourceTree = "<group>"; };
 		3BCCA2E340C4E03F332A3C877C6E5DF8 /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerRelatable.swift; path = Sources/ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
-		3EA5BDD6DA462D45C28EA963654D95D3 /* R.swift */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = R.swift; path = RswiftResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EA5BDD6DA462D45C28EA963654D95D3 /* RswiftResources.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RswiftResources.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F7F3F27C79655FE6D5B4B28385CE4EE /* LayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraint.swift; path = Sources/LayoutConstraint.swift; sourceTree = "<group>"; };
 		3FF7A7E1B85BB9C2B16A822CEB79479C /* ConstraintMakerFinalizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerFinalizable.swift; path = Sources/ConstraintMakerFinalizable.swift; sourceTree = "<group>"; };
 		436D25116DB95207C45B1B8EFD34C16D /* Pods-DropDownMenu-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DropDownMenu-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -170,10 +170,10 @@
 		923D0CC98E0A03F13BDE6328C6AA96E3 /* SnapKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-umbrella.h"; sourceTree = "<group>"; };
 		9258AE22961CEFB859C5591B4FA9CAB1 /* ModuleReference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModuleReference.swift; path = Sources/RswiftResources/Shared/ModuleReference.swift; sourceTree = "<group>"; };
 		94A6BCD28793444D5D31C3423F00B6E3 /* LayoutConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraintItem.swift; path = Sources/LayoutConstraintItem.swift; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* SnapKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99FDE70FDC0453E5E36365C6963702A3 /* StoryboardReference.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StoryboardReference.swift; path = Sources/RswiftResources/Shared/StoryboardReference.swift; sourceTree = "<group>"; };
 		9A5A8413032121639A7AB27944E28FEF /* FileResource.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FileResource.swift; path = Sources/RswiftResources/FileResource.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A240FBA85F0C932387E77D18A3A830FF /* ColorResource+Integrations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ColorResource+Integrations.swift"; path = "Sources/RswiftResources/Integrations/ColorResource+Integrations.swift"; sourceTree = "<group>"; };
 		A4702543F62BE3F5166DCE181CAEFCF8 /* ImageResource+Integrations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ImageResource+Integrations.swift"; path = "Sources/RswiftResources/Integrations/ImageResource+Integrations.swift"; sourceTree = "<group>"; };
 		A70B28A67FBD17FD8FDFD659F76400D2 /* ConstraintMakerRelatable+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintMakerRelatable+Extensions.swift"; path = "Sources/ConstraintMakerRelatable+Extensions.swift"; sourceTree = "<group>"; };
@@ -276,7 +276,6 @@
 				6BBEC5C07855B766F14A89C582E6DC14 /* UILayoutSupport+Extensions.swift */,
 				B5B67F1D30A4AEB9D7853A9C07E6665D /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -318,7 +317,6 @@
 				26962F747313B113F89F68348F0F0057 /* ValidationError.swift */,
 				417EF76C5184831B3B7FAF90F9E6D28C /* Support Files */,
 			);
-			name = R.swift;
 			path = R.swift;
 			sourceTree = "<group>";
 		};
@@ -340,9 +338,9 @@
 		521CB385DFC9617F62FDADE8118D49F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0040A43F01CEA277C7C67C5CB5CE2C19 /* Pods-DropDownMenu */,
-				3EA5BDD6DA462D45C28EA963654D95D3 /* R.swift */,
-				979486118B3E90C08386079D57962701 /* SnapKit */,
+				0040A43F01CEA277C7C67C5CB5CE2C19 /* Pods_DropDownMenu.framework */,
+				3EA5BDD6DA462D45C28EA963654D95D3 /* RswiftResources.framework */,
+				979486118B3E90C08386079D57962701 /* SnapKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -468,7 +466,7 @@
 			);
 			name = SnapKit;
 			productName = SnapKit;
-			productReference = 979486118B3E90C08386079D57962701 /* SnapKit */;
+			productReference = 979486118B3E90C08386079D57962701 /* SnapKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		230984053C6652DFF510F450F21C5CF7 /* R.swift */ = {
@@ -486,7 +484,7 @@
 			);
 			name = R.swift;
 			productName = RswiftResources;
-			productReference = 3EA5BDD6DA462D45C28EA963654D95D3 /* R.swift */;
+			productReference = 3EA5BDD6DA462D45C28EA963654D95D3 /* RswiftResources.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		BDC12F650A66F9D04B842B8E9C957E18 /* Pods-DropDownMenu */ = {
@@ -506,7 +504,7 @@
 			);
 			name = "Pods-DropDownMenu";
 			productName = Pods_DropDownMenu;
-			productReference = 0040A43F01CEA277C7C67C5CB5CE2C19 /* Pods-DropDownMenu */;
+			productReference = 0040A43F01CEA277C7C67C5CB5CE2C19 /* Pods_DropDownMenu.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -515,8 +513,8 @@
 		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1300;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 14.0";
