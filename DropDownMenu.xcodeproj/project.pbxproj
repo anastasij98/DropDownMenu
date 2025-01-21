@@ -21,6 +21,7 @@
 		477C76BE2A97470F006DA104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 477C76BD2A97470F006DA104 /* Assets.xcassets */; };
 		477C76CB2A97AF0E006DA104 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477C76CA2A97AF0E006DA104 /* HeaderView.swift */; };
 		4792356F2B5EC0DE0037764E /* UITabelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4792356E2B5EC0DE0037764E /* UITabelViewCell.swift */; };
+		47A616BE2C6FA15F00C8B098 /* NewFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A616BD2C6FA15F00C8B098 /* NewFile.swift */; };
 		47C05D8E2B5ADF5B000D2706 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47C05D8D2B5ADF5B000D2706 /* Launch Screen.storyboard */; };
 		47C9B51B2AA72129009A98C8 /* DropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9B51A2AA72129009A98C8 /* DropDownCell.swift */; };
 		D6DC7F81B578D85E31B26F24 /* Pods_DropDownMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E6FD3C2BEDA396C849A314 /* Pods_DropDownMenu.framework */; };
@@ -44,6 +45,7 @@
 		477C76C22A97470F006DA104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		477C76CA2A97AF0E006DA104 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		4792356E2B5EC0DE0037764E /* UITabelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabelViewCell.swift; sourceTree = "<group>"; };
+		47A616BD2C6FA15F00C8B098 /* NewFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFile.swift; sourceTree = "<group>"; };
 		47C05D8D2B5ADF5B000D2706 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		47C9B51A2AA72129009A98C8 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
 		7DEA886027CA8D5FC7FFF3C7 /* Pods-DropDownMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropDownMenu.debug.xcconfig"; path = "Target Support Files/Pods-DropDownMenu/Pods-DropDownMenu.debug.xcconfig"; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				4765DE022AD6CDF2007875CD /* Extensions */,
 				477C76BD2A97470F006DA104 /* Assets.xcassets */,
 				477C76C22A97470F006DA104 /* Info.plist */,
+				47A616BD2C6FA15F00C8B098 /* NewFile.swift */,
 			);
 			path = DropDownMenu;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				477623642AD42518003FBA97 /* SecondViewController.swift in Sources */,
 				4765DDFB2AD558EE007875CD /* PushVCProtocol.swift in Sources */,
 				477C76B52A97470E006DA104 /* AppDelegate.swift in Sources */,
+				47A616BE2C6FA15F00C8B098 /* NewFile.swift in Sources */,
 				4765DDFF2AD69AA8007875CD /* ButtonCell.swift in Sources */,
 				477C76B72A97470E006DA104 /* SceneDelegate.swift in Sources */,
 				4765DDF82AD54198007875CD /* PassTextProtocol.swift in Sources */,
